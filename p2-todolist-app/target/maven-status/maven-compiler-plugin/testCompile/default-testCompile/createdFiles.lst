@@ -1,0 +1,6 @@
+todolist\controller\TareaWebTest.class
+todolist\controller\UsuarioWebTest.class
+todolist\repository\UsuarioTest.class
+todolist\service\UsuarioServiceTest.class
+todolist\service\TareaServiceTest.class
+todolist\repository\TareaTest.class
