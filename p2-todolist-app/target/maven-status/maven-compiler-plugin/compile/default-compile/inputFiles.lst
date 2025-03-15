@@ -7,6 +7,7 @@ D:\GitHub\ATSD_2025_P2\p2-todolist-app\src\main\java\todolist\service\UsuarioSer
 D:\GitHub\ATSD_2025_P2\p2-todolist-app\src\main\java\todolist\controller\exception\TareaNotFoundException.java
 D:\GitHub\ATSD_2025_P2\p2-todolist-app\src\main\java\todolist\controller\exception\UsuarioNoLogeadoException.java
 D:\GitHub\ATSD_2025_P2\p2-todolist-app\src\main\java\todolist\controller\LoginController.java
+D:\GitHub\ATSD_2025_P2\p2-todolist-app\src\main\java\todolist\controller\HomeController.java
 D:\GitHub\ATSD_2025_P2\p2-todolist-app\src\main\java\todolist\model\Usuario.java
 D:\GitHub\ATSD_2025_P2\p2-todolist-app\src\main\java\todolist\service\InitDbService.java
 D:\GitHub\ATSD_2025_P2\p2-todolist-app\src\main\java\todolist\Application.java
