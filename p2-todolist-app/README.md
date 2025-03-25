@@ -44,3 +44,4 @@ Once the app is running, you can open your favourite browser and connect to:
 - - HTML `/registered.html`
 - - Controller UsuariosController with `registeredList`
 - - Service UsuariosService with `getAllUsers`
+- - Test RegisteredPageTest.java 
