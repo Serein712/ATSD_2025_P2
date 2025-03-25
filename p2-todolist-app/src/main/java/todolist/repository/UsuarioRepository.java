@@ -1,5 +1,6 @@
 package todolist.repository;
 
+import todolist.dto.UsuarioData;
 import todolist.model.Usuario;
 import org.springframework.data.repository.CrudRepository;
 
