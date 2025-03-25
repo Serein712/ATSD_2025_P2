@@ -29,8 +29,6 @@ public class UsuariosController {
 
         List<UsuarioData> usuarios = usuarioService.getAllUsers();
         model.addAttribute("usuarios", usuarios);
-
-
         return "registered";
     }
 }
