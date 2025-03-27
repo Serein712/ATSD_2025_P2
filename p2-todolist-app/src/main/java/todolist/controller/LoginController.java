@@ -32,6 +32,7 @@ public class LoginController {
 
     @GetMapping("/login")
     public String loginForm(Model model) {
+
         model.addAttribute("loginData", new LoginData());
         return "formLogin";
     }
@@ -44,13 +45,14 @@ public class LoginController {
 
         if (loginStatus == UsuarioService.LoginStatus.LOGIN_OK) {
             UsuarioData usuario = usuarioService.findByEmail(loginData.geteMail());
+            managerUserSession.logearUsuario(usuario.getId(),usuario.getNombre());
+            //model.addAttribute("usuarioData", usuario);
+            return "redirect:/usuarios/" + managerUserSession.usuarioLogeado() + "/tareas";
 
-            managerUserSession.logearUsuario(usuario.getId());
-
-            return "redirect:/usuarios/" + usuario.getId() + "/tareas";
         } else if (loginStatus == UsuarioService.LoginStatus.USER_NOT_FOUND) {
             model.addAttribute("error", "No existe usuario");
             return "formLogin";
+
         } else if (loginStatus == UsuarioService.LoginStatus.ERROR_PASSWORD) {
             model.addAttribute("error", "Contraseña incorrecta");
             return "formLogin";

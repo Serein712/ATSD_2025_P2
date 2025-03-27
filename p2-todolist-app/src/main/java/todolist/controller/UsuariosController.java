@@ -23,6 +23,20 @@ public class UsuariosController {
     @Autowired
     UsuarioService usuarioService;
 
+    @Autowired
+    ManagerUserSession managerUserSession;
+
+    @ModelAttribute
+    public void addAttributes(Model model) {
+        Long userId = managerUserSession.getIdUsuario();
+        if (userId != null) {
+            model.addAttribute("userLoggedIn", true);
+            model.addAttribute("userId", userId);
+        }
+        else {
+            model.addAttribute("userLoggedIn", false);
+        }
+    }
 
     @GetMapping("/registered")
     public String registeredList(Model model) {

@@ -28,6 +28,18 @@ public class TareaController {
     @Autowired
     ManagerUserSession managerUserSession;
 
+    @ModelAttribute
+    public void addAttributes(Model model) {
+        Long userId = managerUserSession.getIdUsuario();
+        if (userId != null) {
+            model.addAttribute("userLoggedIn", true);
+            model.addAttribute("userId", userId);
+        }
+        else {
+            model.addAttribute("userLoggedIn", false);
+        }
+    }
+
     private void comprobarUsuarioLogeado(Long idUsuario) {
         Long idUsuarioLogeado = managerUserSession.usuarioLogeado();
         if (!idUsuario.equals(idUsuarioLogeado))
