@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: todolist.repository.UsuarioTest
+-------------------------------------------------------------------------------
+Tests run: 6, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 2.996 s - in todolist.repository.UsuarioTest

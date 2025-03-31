@@ -21,4 +21,10 @@ public class AboutPageTest {
         this.mockMvc.perform(get("/about"))
                 .andExpect(content().string(containsString("ToDoList")));
     }
+
+    @Test
+    public void getAboutGuestNavbar() throws Exception {
+        this.mockMvc.perform(get("/about"))
+                .andExpect(content().string(containsString("Guest")));
+    }
 }
