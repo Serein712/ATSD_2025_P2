@@ -1,5 +1,6 @@
 package todolist.dto;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Objects;
 
@@ -43,7 +44,22 @@ public class UsuarioData {
     public String getPassword() { return password; }
 
     public Date getFechaNacimiento() {
+        // Type: Date
+        // Format: YYYY-MM-DD
+        // If null -> error
         return fechaNacimiento;
+    }
+
+    public String getFechaNacimientoFormateada() {
+        // Type: String
+        // Format: DD/MM/YYYY
+        // If null -> Date not specified
+
+        if (this.fechaNacimiento == null) {
+            return "Not specified";
+        }
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+        return formatter.format(this.fechaNacimiento);
     }
 
     public void setFechaNacimiento(Date fechaNacimiento) {

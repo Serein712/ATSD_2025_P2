@@ -45,4 +45,12 @@ public class UsuariosController {
         model.addAttribute("usuarios", usuarios);
         return "registered";
     }
+
+    @GetMapping("/registered/{id}")
+    public String registeredUser(@PathVariable(value="id") Long idUsuario, Model model) {
+
+        UsuarioData usuario = usuarioService.findById(idUsuario);
+        model.addAttribute("usuario", usuario);
+        return "userPage";
+    }
 }
