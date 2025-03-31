@@ -45,3 +45,5 @@ Once the app is running, you can open your favourite browser and connect to:
 - - Controller UsuariosController with `registeredList`
 - - Service UsuariosService with `getAllUsers`
 - - Test RegisteredPageTest.java 
+- - Test for menu navbar in AboutPageTest.java
+- - Docker image updated
