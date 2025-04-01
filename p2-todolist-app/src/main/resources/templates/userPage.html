@@ -1,23 +1,44 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head th:replace="fragments :: head (titulo='User Page')">
-    <title></title>
+    <title>User Page</title>
 </head>
 <body>
-    <div th:replace="fragments :: navbar"></div>
-    <div class="container-fluid">
-        <div class="container-fluid">
-            <h1 th:text="${usuario.getNombre()}">Username</h1>
-            <ul>
-                <li th:text="'ID: ' + ${usuario.getId()}">ID</li>
-                <li th:text="'Email: ' + ${usuario.getEmail()}">Email</li>
-                <li th:text="'Name: ' + ${usuario.getNombre()}">Name: not specified by user</li>
-                <li th:text="'Birthdate: ' + ${usuario.getFechaNacimientoFormateada()}">Birthdate: not specified by user</li>
-            </ul>
+<div th:replace="fragments :: navbar"></div>
+
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-lg">
+                <div class="card-header bg-primary text-white text-center">
+                    <h2 th:text="${usuario.getNombre()}">Username</h2>
+                </div>
+                <div class="card-body">
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">
+                            <strong>ID: </strong> <span th:text="${usuario.getId()}"></span>
+                        </li>
+                        <li class="list-group-item">
+                            <strong>Email: </strong> <span th:text="${usuario.getEmail()}"></span>
+                        </li>
+                        <li class="list-group-item">
+                            <strong>Name: </strong> <span th:text="${usuario.getNombre()}">Not specified</span>
+                        </li>
+                        <li class="list-group-item">
+                            <strong>Birthdate: </strong> <span th:text="${usuario.getFechaNacimientoFormateada()}">Not specified</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="text-center mt-4">
+                <a class="btn btn-secondary" href="/registered">Volver</a></p>
+            </div>
         </div>
     </div>
+</div>
 
-    <div th:replace="fragments::javascript"></div>
+<div th:replace="fragments::javascript"></div>
 
-    </body>
+</body>
 </html>
