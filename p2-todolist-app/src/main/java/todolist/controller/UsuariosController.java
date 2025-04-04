@@ -45,4 +45,15 @@ public class UsuariosController {
         model.addAttribute("usuarios", usuarios);
         return "registered";
     }
+
+    @GetMapping("/registered/{id}")
+    public String registeredUser(@PathVariable(value="id") Long idUsuario, Model model) {
+
+        UsuarioData usuario = usuarioService.findById(idUsuario);
+        model.addAttribute("id", usuario.getId());
+        model.addAttribute("nombre", usuario.getNombre());
+        model.addAttribute("email", usuario.getEmail());
+        model.addAttribute("fechaNacimiento", usuario.getFechaNacimientoFormateada());
+        return "userPage";
+    }
 }
