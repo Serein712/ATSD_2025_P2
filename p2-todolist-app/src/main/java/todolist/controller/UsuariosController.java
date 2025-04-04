@@ -50,7 +50,10 @@ public class UsuariosController {
     public String registeredUser(@PathVariable(value="id") Long idUsuario, Model model) {
 
         UsuarioData usuario = usuarioService.findById(idUsuario);
-        model.addAttribute("usuario", usuario);
+        model.addAttribute("id", usuario.getId());
+        model.addAttribute("nombre", usuario.getNombre());
+        model.addAttribute("email", usuario.getEmail());
+        model.addAttribute("fechaNacimiento", usuario.getFechaNacimientoFormateada());
         return "userPage";
     }
 }

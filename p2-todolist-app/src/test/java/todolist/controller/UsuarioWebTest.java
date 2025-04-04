@@ -9,8 +9,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
 
+import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.containsString;
 import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -41,11 +43,14 @@ public class UsuarioWebTest {
 
         UsuarioData anaGarcia = new UsuarioData();
         anaGarcia.setNombre("Ana García");
+        anaGarcia.setEmail("ana.garcia@gmail.com");
         anaGarcia.setId(1L);
 
         when(usuarioService.login("ana.garcia@gmail.com", "12345678"))
                 .thenReturn(UsuarioService.LoginStatus.LOGIN_OK);
         when(usuarioService.findByEmail("ana.garcia@gmail.com"))
+                .thenReturn(anaGarcia);
+        when(usuarioService.findById(anaGarcia.getId()))
                 .thenReturn(anaGarcia);
 
         // WHEN, THEN
@@ -58,6 +63,13 @@ public class UsuarioWebTest {
                         .param("password", "12345678"))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(redirectedUrl("/usuarios/1/tareas"));
+
+        this.mockMvc.perform(get("/registered/{id}", anaGarcia.getId()))
+                .andExpect(status().isOk())
+                .andExpect(content().string(allOf(
+                        containsString("Ana García"),
+                        containsString("ana.garcia@gmail.com")
+                )));
     }
 
     @Test

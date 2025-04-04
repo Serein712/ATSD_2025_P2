@@ -5,9 +5,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.servlet.MockMvc;
+import todolist.dto.UsuarioData;
+import todolist.service.UsuarioService;
 
 import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.containsString;
+import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 
@@ -24,12 +27,5 @@ public class RegisteredPageTest {
                 .andExpect(content().string(containsString("Usuarios")));
     }
 
-    @Test
-    public void getRegisteredUserPage() throws Exception {
-        this.mockMvc.perform(get("/registered/1"))
-                .andExpect(content().string(allOf(
-                        containsString("Richard Stallman"),
-                        containsString("richard"))));
-    }
 
 }
