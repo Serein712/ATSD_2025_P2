@@ -12,7 +12,12 @@ public class UsuarioData {
     private String nombre;
     private String password;
     private Date fechaNacimiento;
+    private Boolean admin;
+    private Boolean ban;
 
+    public UsuarioData() {
+        this.admin = false;
+    }
     // Getters y setters
 
     public Long getId() {
@@ -80,5 +85,19 @@ public class UsuarioData {
     @Override
     public int hashCode() {
         return Objects.hash(getId());
+    }
+
+    public Boolean getAdmin() {
+        return admin;
+    }
+    public void setAdmin(Boolean admin) {
+        this.admin = admin;
+    }
+    public Boolean getBan() {
+        return ban;
+    }
+
+    public void setBan(Boolean ban) {
+        this.ban = ban;
     }
 }

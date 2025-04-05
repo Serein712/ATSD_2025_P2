@@ -25,6 +25,9 @@ public class Usuario implements Serializable {
     @Temporal(TemporalType.DATE)
     private Date fechaNacimiento;
 
+    private Boolean admin;
+    private Boolean ban;
+
     // La relación es lazy por defecto,
     // es necesario acceder a la lista de tareas para que se carguen
     @OneToMany(mappedBy = "usuario")
@@ -37,6 +40,7 @@ public class Usuario implements Serializable {
     // Constructor público con los atributos obligatorios. En este caso el correo electrónico.
     public Usuario(String email) {
         this.email = email;
+        this.admin = false;
     }
 
     // Getters y setters atributos básicos
@@ -115,5 +119,21 @@ public class Usuario implements Serializable {
     public int hashCode() {
         // Generamos un hash basado en los campos obligatorios
         return Objects.hash(email);
+    }
+
+    public Boolean getAdmin() {
+        return admin;
+    }
+
+    public void setAdmin(Boolean admin) {
+        this.admin = admin;
+    }
+
+    public Boolean getBan() {
+        return ban;
+    }
+
+    public void setBan(Boolean ban) {
+        this.ban = ban;
     }
 }

@@ -78,12 +78,18 @@ public class LoginController {
             model.addAttribute("error", "El usuario " + registroData.getEmail() + " ya existe");
             return "formRegistro";
         }
+       if (registroData.getAdmin() && usuarioService.existsByAdminTrue()) {
+           model.addAttribute("registroData", registroData);
+           model.addAttribute("error", "El admin ya existe");
+           return "formRegistro";
+       }
 
         UsuarioData usuario = new UsuarioData();
         usuario.setEmail(registroData.getEmail());
         usuario.setPassword(registroData.getPassword());
         usuario.setFechaNacimiento(registroData.getFechaNacimiento());
         usuario.setNombre(registroData.getNombre());
+        usuario.setAdmin(registroData.getAdmin());
 
         usuarioService.registrar(usuario);
         return "redirect:/login";
