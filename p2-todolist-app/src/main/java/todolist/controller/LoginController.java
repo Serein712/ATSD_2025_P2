@@ -4,6 +4,7 @@ import todolist.authentication.ManagerUserSession;
 import todolist.dto.LoginData;
 import todolist.dto.RegistroData;
 import todolist.dto.UsuarioData;
+import todolist.repository.UsuarioRepository;
 import todolist.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -24,6 +25,9 @@ public class LoginController {
 
     @Autowired
     ManagerUserSession managerUserSession;
+
+    @Autowired
+    UsuarioRepository usuarioRepository;
 
     @GetMapping("/")
     public String home(Model model) {
@@ -46,8 +50,7 @@ public class LoginController {
         if (loginStatus == UsuarioService.LoginStatus.LOGIN_OK) {
             UsuarioData usuario = usuarioService.findByEmail(loginData.geteMail());
             managerUserSession.logearUsuario(usuario.getId(),usuario.getNombre());
-            //model.addAttribute("usuarioData", usuario);
-            return "redirect:/usuarios/" + managerUserSession.usuarioLogeado() + "/tareas";
+            return usuario.getAdmin() ? "redirect:/registered" : "redirect:/usuarios/" + managerUserSession.usuarioLogeado() + "/tareas";
 
         } else if (loginStatus == UsuarioService.LoginStatus.USER_NOT_FOUND) {
             model.addAttribute("error", "No existe usuario");
@@ -63,6 +66,7 @@ public class LoginController {
     @GetMapping("/registro")
     public String registroForm(Model model) {
         model.addAttribute("registroData", new RegistroData());
+        model.addAttribute("adminExists", usuarioRepository.existsByAdminTrue());
         return "formRegistro";
     }
 
@@ -92,7 +96,9 @@ public class LoginController {
         usuario.setAdmin(registroData.getAdmin());
 
         usuarioService.registrar(usuario);
+
         return "redirect:/login";
+
    }
 
    @GetMapping("/logout")

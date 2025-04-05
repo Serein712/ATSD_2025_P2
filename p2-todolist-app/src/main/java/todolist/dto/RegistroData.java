@@ -14,6 +14,11 @@ public class RegistroData {
     private String nombre;
     @DateTimeFormat(pattern = "dd-MM-yyyy")
     private Date fechaNacimiento;
+
+    public RegistroData() {
+        this.admin = false;
+    }
+
     private Boolean admin;
     private Boolean ban;
 
