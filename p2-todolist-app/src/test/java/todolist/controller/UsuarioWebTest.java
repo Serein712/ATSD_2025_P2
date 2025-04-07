@@ -9,6 +9,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.util.List;
+
 import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.containsString;
 import static org.mockito.Mockito.when;
@@ -36,6 +38,44 @@ public class UsuarioWebTest {
 
     @Test
     public void servicioLoginUsuarioOK() throws Exception {
+        // GIVEN
+        // Moqueamos la llamada a usuarioService.login para que
+        // devuelva un LOGIN_OK y la llamada a usuarioServicie.findByEmail
+        // para que devuelva un usuario determinado.
+
+        UsuarioData anaGarcia = new UsuarioData();
+        anaGarcia.setNombre("Ana García");
+        anaGarcia.setEmail("ana.garcia@gmail.com");
+        anaGarcia.setId(1L);
+
+        when(usuarioService.login("ana.garcia@gmail.com", "12345678"))
+                .thenReturn(UsuarioService.LoginStatus.LOGIN_OK);
+        when(usuarioService.findByEmail("ana.garcia@gmail.com"))
+                .thenReturn(anaGarcia);
+        when(usuarioService.findById(anaGarcia.getId()))
+                .thenReturn(anaGarcia);
+
+        // WHEN, THEN
+        // Realizamos una petición POST al login pasando los datos
+        // esperados en el mock, la petición devolverá una redirección a la
+        // URL con las tareas del usuario
+
+        this.mockMvc.perform(post("/login")
+                        .param("eMail", "ana.garcia@gmail.com")
+                        .param("password", "12345678"))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(redirectedUrl("/usuarios/1/tareas"));
+
+        this.mockMvc.perform(get("/registered/{id}", anaGarcia.getId()))
+                .andExpect(status().isOk())
+                .andExpect(content().string(allOf(
+                        containsString("Ana García"),
+                        containsString("ana.garcia@gmail.com")
+                )));
+    }
+
+    @Test
+    public void servicioPerfilUsuarioOK() throws Exception {
         // GIVEN
         // Moqueamos la llamada a usuarioService.login para que
         // devuelva un LOGIN_OK y la llamada a usuarioServicie.findByEmail
@@ -104,5 +144,17 @@ public class UsuarioWebTest {
                         .param("eMail","ana.garcia@gmail.com")
                         .param("password","000"))
                 .andExpect(content().string(containsString("Contraseña incorrecta")));
+    }
+
+    @Test
+    public void noMostrarCheckboxAdminSiYaExisteUnAdmin() throws Exception {
+        // GIVEN
+        // Simulamos que ya existe un admin en la base de datos
+        when(usuarioService.existsByAdminTrue()).thenReturn(false);
+
+        // WHEN & THEN
+        this.mockMvc.perform(get("/registro"))
+                .andExpect(status().isOk())
+                .andExpect(content().string((containsString("id=\"admin_checkbox\""))));
     }
 }
