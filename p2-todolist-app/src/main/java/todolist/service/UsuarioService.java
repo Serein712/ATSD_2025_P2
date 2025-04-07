@@ -87,4 +87,9 @@ public class UsuarioService {
                 .sorted((a, b) -> a.getId() < b.getId() ? -1 : a.getId() == b.getId() ? 0 : 1)
                 .collect(Collectors.toList());
     }
+
+    @Transactional(readOnly = true)
+    public boolean existsByAdminTrue() {
+        return usuarioRepository.existsByAdminTrue();
+    }
 }

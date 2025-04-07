@@ -6,6 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import todolist.authentication.ManagerUserSession;
+import todolist.repository.UsuarioRepository;
 
 @Controller
 public class HomeController {
@@ -13,12 +14,14 @@ public class HomeController {
     @Autowired
     ManagerUserSession managerUserSession;
 
+
     @ModelAttribute
     public void addAttributes(Model model) {
         Long userId = managerUserSession.getIdUsuario();
         if (userId != null) {
             model.addAttribute("userLoggedIn", true);
             model.addAttribute("userId", userId);
+
         }
         else {
             model.addAttribute("userLoggedIn", false);
