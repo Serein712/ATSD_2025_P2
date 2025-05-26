@@ -21,7 +21,7 @@ import javax.validation.Valid;
 public class LoginController {
 
     @Autowired
-    UsuarioService usuarioService; 
+    UsuarioService usuarioService;
 
     @Autowired
     ManagerUserSession managerUserSession;
