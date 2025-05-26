@@ -25,6 +25,10 @@ jobs:
 
     steps:
       - uses: actions/checkout@v1
+      - name: Make Maven Wrapper executable
+        working-directory: ./p2-todolist-app
+        run: chmod +x ./mvnw
+        
       - name: Launch tests with Maven
         working-directory: ./p2-todolist-app
         run:  ./mvnw test -D spring.profiles.active=postgres
