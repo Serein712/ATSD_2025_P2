@@ -6,6 +6,7 @@ import todolist.dto.EquipoData;
 import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import todolist.dto.UsuarioData;
 
 import java.util.List;
 
@@ -15,6 +16,9 @@ public class EquipoServiceTest {
 
     @Autowired
     EquipoService equipoService;
+
+    @Autowired
+    UsuarioService usuarioService;
 
     @Test
     public void crearRecuperarEquipo() {
@@ -41,6 +45,27 @@ public class EquipoServiceTest {
         assertThat(equipos).hasSize(2);
         assertThat(equipos.get(0).getNombre()).isEqualTo("Project AAA");
         assertThat(equipos.get(1).getNombre()).isEqualTo("Project BBB");
+    }
+
+    @Test
+    public void añadirUsuarioAEquipoTest() {
+        // GIVEN
+        // Un usuario y un equipo en la base de datos
+        UsuarioData usuario = new UsuarioData();
+        usuario.setEmail("user@umh");
+        usuario.setPassword("1234");
+        usuario = usuarioService.registrar(usuario);
+        EquipoData equipo = equipoService.crearEquipo("Proyecto 1");
+
+        // WHEN
+        // Añadimos el usuario al equipo
+        equipoService.añadirUsuarioAEquipo(equipo.getId(), usuario.getId());
+
+        // THEN
+        // El usuario pertenece al equipo
+        List<UsuarioData> usuarios = equipoService.usuariosEquipo(equipo.getId());
+        assertThat(usuarios).hasSize(1);
+        assertThat(usuarios.get(0).getEmail()).isEqualTo("user@umh");
     }
 
 }

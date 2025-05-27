@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: todolist.repository.EquipoTest
 -------------------------------------------------------------------------------
-Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 2.291 s - in todolist.repository.EquipoTest
+Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 2.413 s - in todolist.repository.EquipoTest
