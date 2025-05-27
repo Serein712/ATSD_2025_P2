@@ -24,7 +24,6 @@ public class Usuario implements Serializable {
     @Column(name = "fecha_nacimiento")
     @Temporal(TemporalType.DATE)
     private Date fechaNacimiento;
-
     private Boolean admin;
     private Boolean ban;
 
@@ -33,6 +32,9 @@ public class Usuario implements Serializable {
     @OneToMany(mappedBy = "usuario")
     Set<Tarea> tareas = new HashSet<>();
 
+    @ManyToMany(mappedBy = "usuarios")
+    Set<Equipo> equipos = new HashSet<>();
+
     // Constructor vacío necesario para JPA/Hibernate.
     // No debe usarse desde la aplicación.
     public Usuario() {}
@@ -40,7 +42,6 @@ public class Usuario implements Serializable {
     // Constructor público con los atributos obligatorios. En este caso el correo electrónico.
     public Usuario(String email) {
         this.email = email;
-        this.admin = false;
     }
 
     // Getters y setters atributos básicos
@@ -91,7 +92,11 @@ public class Usuario implements Serializable {
         return tareas;
     }
 
-    // Método helper para añadir una tarea a la lista y establecer la relación inversa
+    public Set<Equipo> getEquipos() {
+        return equipos;
+    }
+
+    // Metodo helper para añadir una tarea a la lista y establecer la relación inversa
     public void addTarea(Tarea tarea) {
         // Si la tarea ya está en la lista, no la añadimos
         if (tareas.contains(tarea)) return;
@@ -119,21 +124,5 @@ public class Usuario implements Serializable {
     public int hashCode() {
         // Generamos un hash basado en los campos obligatorios
         return Objects.hash(email);
-    }
-
-    public Boolean getAdmin() {
-        return admin;
-    }
-
-    public void setAdmin(Boolean admin) {
-        this.admin = admin;
-    }
-
-    public Boolean getBan() {
-        return ban;
-    }
-
-    public void setBan(Boolean ban) {
-        this.ban = ban;
     }
 }
