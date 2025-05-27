@@ -8,7 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class EquipoService {
@@ -75,5 +78,21 @@ public class EquipoService {
         Equipo equipo = equipoRepository.findById(id).orElse(null);
 
         return modelMapper.map(equipo, EquipoData.class);
+    }
+
+    @Transactional
+    public List<EquipoData> findAllOrdenadoPorNombre() {
+        // recuperamos todos los equipos
+        List<Equipo> equipos;
+        equipos = equipoRepository.findAll();
+
+        // cambiamos el tipo de la lista de equipos
+        List<EquipoData> equiposData = equipos.stream()
+                .map(equipo -> modelMapper.map(equipo, EquipoData.class))
+                .collect(Collectors.toList());
+
+        // ordenamos la lista por nombre del equipo
+        Collections.sort(equiposData, (a, b) -> a.getNombre().compareTo(b.getNombre()));
+        return equiposData;
     }
 }
