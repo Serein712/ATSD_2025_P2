@@ -9,13 +9,12 @@ public class EquipoData {
     private String nombre;
 
     // Getters y setters
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public Long getId() {
         return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getNombre() {
@@ -32,13 +31,18 @@ public class EquipoData {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof EquipoData)) return false;
-        EquipoData that = (EquipoData) o;
-        return Objects.equals(getId(), that.getId());
+        if (o == null || getClass() != o.getClass()) return false;
+        EquipoData equipo = (EquipoData) o;
+        if (id != null && equipo.id != null)
+            // Si tenemos los ID, comparamos por ID
+            return Objects.equals(id, equipo.id);
+        // si no comparamos por campos obligatorios
+        return nombre.equals(equipo.nombre);
     }
-
     @Override
     public int hashCode() {
-        return Objects.hash(getId());
+        // Generamos un hash basado en los campos obligatorios
+        return Objects.hash(nombre);
     }
+
 }
