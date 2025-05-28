@@ -25,6 +25,9 @@
                 <li class="nav-item">
                     <a class="nav-link" th:href="@{/usuarios/{id}/tareas(id=${#session.getAttribute('idUsuarioLogeado')})}">Tasks</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/usuarios/{id}/equipos(id=${#session.getAttribute('idUsuarioLogeado')})}">Teams</a>
+                </li>
             </ul>
 
             <span th:if="${userLoggedIn}" class="nav-item dropdown">
