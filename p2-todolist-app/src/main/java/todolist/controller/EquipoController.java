@@ -6,6 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import todolist.authentication.ManagerUserSession;
+import todolist.controller.exception.EquipoNotFoundException;
 import todolist.controller.exception.TareaNotFoundException;
 import todolist.controller.exception.UsuarioNoLogeadoException;
 import todolist.dto.EquipoData;
@@ -56,10 +57,28 @@ public class EquipoController {
     public String listadoEquipos(@PathVariable(value="id") Long idUsuario, Model model, HttpSession session) {
         comprobarUsuarioLogeado(idUsuario);
         UsuarioData usuario = usuarioService.findById(idUsuario);
+        List<EquipoData> equipos_usuario = equipoService.equiposUsuario(usuario.getId());
         List<EquipoData> equipos = equipoService.findAllOrdenadoPorNombre();
+        model.addAttribute("equipos_usuario", equipos_usuario);
         model.addAttribute("usuario", usuario);
         model.addAttribute("equipos", equipos);
         return "listaEquipos";
+    }
+
+    @GetMapping("/equipos/{id}")
+    public String detalleEquipo(@PathVariable(value="id") Long idEquipo, Model model, HttpSession session) {
+
+        EquipoData equipo = equipoService.findById(idEquipo);
+        if (equipo == null) {
+            throw new EquipoNotFoundException();
+        }
+
+        List<UsuarioData> miembros_equipo = equipoService.usuariosEquipo(equipo.getId());
+
+
+        model.addAttribute("equipo", equipo);
+        model.addAttribute("miembros_equipo", miembros_equipo);
+        return "detalleEquipo";
     }
 
 

@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: todolist.service.EquipoServiceTest
 -------------------------------------------------------------------------------
-Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.121 s - in todolist.service.EquipoServiceTest
+Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.06 s - in todolist.service.EquipoServiceTest

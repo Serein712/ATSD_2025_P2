@@ -1,0 +1,18 @@
+-------------------------------------------------------------------------------
+Test set: todolist.controller.TeamListPageTest
+-------------------------------------------------------------------------------
+Tests run: 2, Failures: 2, Errors: 0, Skipped: 0, Time elapsed: 0.058 s <<< FAILURE! - in todolist.controller.TeamListPageTest
+getAboutPageTestAdminTeam  Time elapsed: 0.044 s  <<< FAILURE!
+java.lang.AssertionError: 
+Response content
+Expected: a string containing "AdminTeam"
+     but: was ""
+	at todolist.controller.TeamListPageTest.getAboutPageTestAdminTeam(TeamListPageTest.java:34)
+
+getTeamListDevuelveNombreAplicacion  Time elapsed: 0.009 s  <<< FAILURE!
+java.lang.AssertionError: 
+Response content
+Expected: (a string containing "Id" and a string containing "Equipo" and a string containing "Acción")
+     but: a string containing "Id" was ""
+	at todolist.controller.TeamListPageTest.getTeamListDevuelveNombreAplicacion(TeamListPageTest.java:24)
+

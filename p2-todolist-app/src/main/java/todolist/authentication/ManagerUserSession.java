@@ -24,6 +24,10 @@ public class ManagerUserSession {
         return (Long) session.getAttribute("idUsuarioLogeado");
     }
 
+    public Long getNombreUsuarioLogeado() {
+        return (Long) session.getAttribute("nombreUsuarioLogeado");
+    }
+
     public Long getIdUsuario() {
         return (Long) session.getAttribute("idUsuarioLogeado");
     }

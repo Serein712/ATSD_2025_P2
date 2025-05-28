@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="todolist.service.EquipoServiceTest" time="0.06" tests="5" errors="0" skipped="0" failures="0">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="todolist.controller.TeamListPageTest" time="0.058" tests="2" errors="0" skipped="0" failures="2">
   <properties>
     <property name="sun.desktop" value="windows"/>
     <property name="awt.toolkit" value="sun.awt.windows.WToolkit"/>
@@ -61,9 +61,102 @@
     <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
     <property name="java.class.version" value="52.0"/>
   </properties>
-  <testcase name="listadoEquiposOrdenAlfabetico" classname="todolist.service.EquipoServiceTest" time="0.018"/>
-  <testcase name="comprobarExcepciones" classname="todolist.service.EquipoServiceTest" time="0.002"/>
-  <testcase name="añadirUsuarioAEquipoTest" classname="todolist.service.EquipoServiceTest" time="0.016"/>
-  <testcase name="recuperarEquiposDeUsuario" classname="todolist.service.EquipoServiceTest" time="0.006"/>
-  <testcase name="crearRecuperarEquipo" classname="todolist.service.EquipoServiceTest" time="0.004"/>
+  <testcase name="getAboutPageTestAdminTeam" classname="todolist.controller.TeamListPageTest" time="0.044">
+    <failure message="Response content&#10;Expected: a string containing &quot;AdminTeam&quot;&#10;     but: was &quot;&quot;" type="java.lang.AssertionError">java.lang.AssertionError: 
+Response content
+Expected: a string containing "AdminTeam"
+     but: was ""
+	at todolist.controller.TeamListPageTest.getAboutPageTestAdminTeam(TeamListPageTest.java:34)
+</failure>
+    <system-out><![CDATA[2025-05-28 12:51:41.341  INFO 20652 --- [           main] .b.t.c.SpringBootTestContextBootstrapper : Neither @ContextConfiguration nor @ContextHierarchy found for test class [todolist.controller.TeamListPageTest], using SpringBootContextLoader
+2025-05-28 12:51:41.342  INFO 20652 --- [           main] o.s.t.c.support.AbstractContextLoader    : Could not detect default resource locations for test class [todolist.controller.TeamListPageTest]: no resource found for suffixes {-context.xml, Context.groovy}.
+2025-05-28 12:51:41.343  INFO 20652 --- [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [todolist.controller.TeamListPageTest]: TeamListPageTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2025-05-28 12:51:41.347  INFO 20652 --- [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration todolist.Application for test class todolist.controller.TeamListPageTest
+2025-05-28 12:51:41.350  INFO 20652 --- [           main] .b.t.c.SpringBootTestContextBootstrapper : Loaded default TestExecutionListener class names from location [META-INF/spring.factories]: [org.springframework.boot.test.mock.mockito.MockitoTestExecutionListener, org.springframework.boot.test.mock.mockito.ResetMocksTestExecutionListener, org.springframework.boot.test.autoconfigure.restdocs.RestDocsTestExecutionListener, org.springframework.boot.test.autoconfigure.web.client.MockRestServiceServerResetTestExecutionListener, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcPrintOnlyOnFailureTestExecutionListener, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverTestExecutionListener, org.springframework.boot.test.autoconfigure.webservices.client.MockWebServiceServerTestExecutionListener, org.springframework.test.context.web.ServletTestExecutionListener, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener, org.springframework.test.context.event.ApplicationEventsTestExecutionListener, org.springframework.test.context.support.DependencyInjectionTestExecutionListener, org.springframework.test.context.support.DirtiesContextTestExecutionListener, org.springframework.test.context.transaction.TransactionalTestExecutionListener, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener, org.springframework.test.context.event.EventPublishingTestExecutionListener]
+2025-05-28 12:51:41.350  INFO 20652 --- [           main] .b.t.c.SpringBootTestContextBootstrapper : Using TestExecutionListeners: [org.springframework.test.context.web.ServletTestExecutionListener@47e70f54, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener@30a6984c, org.springframework.test.context.event.ApplicationEventsTestExecutionListener@45302e66, org.springframework.boot.test.mock.mockito.MockitoTestExecutionListener@47c422d3, org.springframework.boot.test.autoconfigure.SpringBootDependencyInjectionTestExecutionListener@382608d0, org.springframework.test.context.support.DirtiesContextTestExecutionListener@3c468360, org.springframework.test.context.transaction.TransactionalTestExecutionListener@7841c990, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener@1e75bef1, org.springframework.test.context.event.EventPublishingTestExecutionListener@169d5567, org.springframework.boot.test.mock.mockito.ResetMocksTestExecutionListener@1e489957, org.springframework.boot.test.autoconfigure.restdocs.RestDocsTestExecutionListener@68b3de47, org.springframework.boot.test.autoconfigure.web.client.MockRestServiceServerResetTestExecutionListener@5b827796, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcPrintOnlyOnFailureTestExecutionListener@27c827ec, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverTestExecutionListener@7d108063, org.springframework.boot.test.autoconfigure.webservices.client.MockWebServiceServerTestExecutionListener@b272860]
+
+MockHttpServletRequest:
+      HTTP Method = GET
+      Request URI = /usuarios/1/equipos
+       Parameters = {}
+          Headers = []
+             Body = null
+    Session Attrs = {}
+
+Handler:
+             Type = todolist.controller.EquipoController
+           Method = todolist.controller.EquipoController#listadoEquipos(Long, Model, HttpSession)
+
+Async:
+    Async started = false
+     Async result = null
+
+Resolved Exception:
+             Type = todolist.controller.exception.UsuarioNoLogeadoException
+
+ModelAndView:
+        View name = null
+             View = null
+            Model = null
+
+FlashMap:
+       Attributes = null
+
+MockHttpServletResponse:
+           Status = 401
+    Error message = Usuario no autorizado
+          Headers = []
+     Content type = null
+             Body = 
+    Forwarded URL = null
+   Redirected URL = null
+          Cookies = []
+]]></system-out>
+  </testcase>
+  <testcase name="getTeamListDevuelveNombreAplicacion" classname="todolist.controller.TeamListPageTest" time="0.009">
+    <failure message="Response content&#10;Expected: (a string containing &quot;Id&quot; and a string containing &quot;Equipo&quot; and a string containing &quot;Acción&quot;)&#10;     but: a string containing &quot;Id&quot; was &quot;&quot;" type="java.lang.AssertionError">java.lang.AssertionError: 
+Response content
+Expected: (a string containing "Id" and a string containing "Equipo" and a string containing "Acción")
+     but: a string containing "Id" was ""
+	at todolist.controller.TeamListPageTest.getTeamListDevuelveNombreAplicacion(TeamListPageTest.java:24)
+</failure>
+    <system-out><![CDATA[
+MockHttpServletRequest:
+      HTTP Method = GET
+      Request URI = /usuarios/1/equipos
+       Parameters = {}
+          Headers = []
+             Body = null
+    Session Attrs = {}
+
+Handler:
+             Type = todolist.controller.EquipoController
+           Method = todolist.controller.EquipoController#listadoEquipos(Long, Model, HttpSession)
+
+Async:
+    Async started = false
+     Async result = null
+
+Resolved Exception:
+             Type = todolist.controller.exception.UsuarioNoLogeadoException
+
+ModelAndView:
+        View name = null
+             View = null
+            Model = null
+
+FlashMap:
+       Attributes = null
+
+MockHttpServletResponse:
+           Status = 401
+    Error message = Usuario no autorizado
+          Headers = []
+     Content type = null
+             Body = 
+    Forwarded URL = null
+   Redirected URL = null
+          Cookies = []
+]]></system-out>
+  </testcase>
 </testsuite>

@@ -10,6 +10,7 @@ D:\GitHub\ATSD_2025_P2\p2-todolist-app\src\main\java\todolist\repository\TareaRe
 D:\GitHub\ATSD_2025_P2\p2-todolist-app\src\main\java\todolist\dto\TareaData.java
 D:\GitHub\ATSD_2025_P2\p2-todolist-app\src\main\java\todolist\dto\LoginData.java
 D:\GitHub\ATSD_2025_P2\p2-todolist-app\src\main\java\todolist\repository\UsuarioRepository.java
+D:\GitHub\ATSD_2025_P2\p2-todolist-app\src\main\java\todolist\controller\EquipoController.java
 D:\GitHub\ATSD_2025_P2\p2-todolist-app\src\main\java\todolist\model\Tarea.java
 D:\GitHub\ATSD_2025_P2\p2-todolist-app\src\main\java\todolist\service\UsuarioServiceException.java
 D:\GitHub\ATSD_2025_P2\p2-todolist-app\src\main\java\todolist\controller\HomeController.java

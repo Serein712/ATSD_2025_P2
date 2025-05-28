@@ -24,19 +24,43 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="equipo : ${equipos}">
-                    <td th:text="${equipo.id}">1</td>
-                    <td th:text="${equipo.nombre}">Nombre</td>
+                <tr th:each="equipo_usuario : ${equipos_usuario}">
+                    <td th:text="${equipo_usuario.id}">1</td>
+                    <td th:text="${equipo_usuario.nombre}">Nombre</td>
                     <td>
                         <a class="btn btn-primary btn-sm me-2"
-                           th:href="@{/equipos/{id}(id=${equipo.id})}">
-                            Detalle
+                           th:href="@{/equipos/{id}(id=${equipo_usuario.id})}">
+                            Detalles
                         </a>
 
                     </td>
                 </tr>
                 </tbody>
             </table>
+            <div class="col">
+                <h2 th:text="'Todos equipos '"></h2>
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Equipo</th>
+                        <th>Acción</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="equipo : ${equipos}">
+                        <td th:text="${equipo.id}">1</td>
+                        <td th:text="${equipo.nombre}">Nombre</td>
+                        <td>
+                            <a class="btn btn-primary btn-sm me-2"
+                               th:href="@{/equipos/{id}(id=${equipo.id})}">
+                                Detalles
+                            </a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
 
             <a class="btn btn-link" href="/logout">Salir</a></p>
         </div>
