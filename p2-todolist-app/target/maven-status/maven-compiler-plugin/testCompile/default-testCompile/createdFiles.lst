@@ -8,4 +8,3 @@ todolist\service\EquipoServiceTest.class
 todolist\service\UsuarioServiceTest.class
 todolist\repository\TareaTest.class
 todolist\controller\RegisteredPageTest.class
-todolist\controller\TeamListPageTest.class

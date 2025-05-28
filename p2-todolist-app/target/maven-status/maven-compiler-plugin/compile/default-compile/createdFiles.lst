@@ -1,5 +1,5 @@
-todolist\repository\EquipoRepository.class
 todolist\model\Equipo.class
-todolist\service\EquipoService.class
 todolist\dto\EquipoData.class
+todolist\repository\EquipoRepository.class
+todolist\service\EquipoService.class
 todolist\service\EquipoServiceException.class
