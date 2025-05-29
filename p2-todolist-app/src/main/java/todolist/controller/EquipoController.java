@@ -120,6 +120,19 @@ public class EquipoController {
         return "redirect:/equipos/" + idEquipo;
     }
 
+    @PostMapping("/usuarios/{id}/equipos/{id_equipo}/abandonar")
+    public String abandonarEquipo(@PathVariable(value="id") Long idUsuario,
+                                  @PathVariable(value="id_equipo") Long idEquipo,
+                                  Model model, RedirectAttributes flash,
+                                  HttpSession session) {
+
+        comprobarUsuarioLogeado(idUsuario);
+        equipoService.quitarUsuarioDeEquipo(idEquipo, idUsuario);
+
+        flash.addFlashAttribute("mensaje", "Ha abandonado este equipo ");
+        return "redirect:/equipos/" + idEquipo;
+    }
+
 
 }
 

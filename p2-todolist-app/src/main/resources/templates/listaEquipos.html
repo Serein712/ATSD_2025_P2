@@ -32,6 +32,9 @@
                            th:href="@{/equipos/{id}(id=${equipo_usuario.id})}">
                             Detalles
                         </a>
+                        <form method="post" th:action="@{/usuarios/{id}/equipos/{id_equipo}/abandonar(id=${usuario.id},id_equipo=${equipo_usuario.id})}">
+                            <button class="btn btn-primary" type="submit">Abandonar</button>
+                        </form>
                     </td>
                 </tr>
                 </tbody>

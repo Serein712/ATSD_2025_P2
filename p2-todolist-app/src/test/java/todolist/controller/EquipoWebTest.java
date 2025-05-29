@@ -128,4 +128,51 @@ public class EquipoWebTest {
                                 containsString("no_Richard"),
                                 containsString("no_richard@umh.es"))));
     }
+
+    @Test
+    public void abandonarEquipoTest() throws Exception {
+        //Crear nuevo equipo
+        EquipoData equipo = new EquipoData();
+        equipo.setNombre("TestAbandonarEquipo");
+        equipo.setId(2L);
+        equipo = equipoService.registrar(equipo);
+
+        //Añadir Richard al equipo
+        equipoService.añadirUsuarioAEquipo(equipo.getId(),addUsuarioEquiposBD().get("usuarioId"));
+
+        //Crear nuevo usuario no_Richard
+        UsuarioData usuario = new UsuarioData();
+        usuario.setNombre("no_Richard");
+        usuario.setEmail("no_richard@umh.es");
+        usuario.setPassword("1234");
+        usuario = usuarioService.registrar(usuario);
+        when(managerUserSession.usuarioLogeado()).thenReturn(usuario.getId());
+
+        //Añadir no_Richard al equipo
+        equipoService.añadirUsuarioAEquipo(equipo.getId(),usuario.getId());
+
+        //Comprobar que ambos estan en el equipo
+        this.mockMvc.perform(get("/equipos/" + equipo.getId()))
+                .andExpect(content().string(
+                        allOf(containsString("Miembros de este equipo"),
+                                containsString("Richard"),
+                                containsString("no_Richard"))));
+
+        //Abandonar el grupo (cuenta de no_Richard)
+        String urlPost = "/usuarios/" + usuario.getId().toString() + "/equipos/" + equipo.getId() + "/abandonar";
+        String urlRedirect = "/equipos/" + equipo.getId();
+
+        this.mockMvc.perform(post(urlPost)
+                        .param(String.valueOf(usuario.getId()), "id")
+                        .param(String.valueOf(equipo.getId()), "id_equipo"))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(redirectedUrl(urlRedirect));
+
+        // Comprobar que Richard esta en el equipo y no_Richard no
+        this.mockMvc.perform(get("/equipos/" + equipo.getId()))
+                .andExpect(content().string(
+                        allOf(containsString("Miembros de este equipo"),
+                                not(containsString("no_Richard")),
+                                containsString("Richard"))));
+    }
 }
