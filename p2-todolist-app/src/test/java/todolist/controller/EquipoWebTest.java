@@ -79,4 +79,26 @@ public class EquipoWebTest {
                 ))));
     }
 
+    @Test
+    public void formNuevoEquipoTest() throws Exception {
+        Long usuarioId = addUsuarioEquiposBD().get("usuarioId");
+        when(managerUserSession.usuarioLogeado()).thenReturn(usuarioId);
+
+        String urlPost = "/usuarios/" + usuarioId.toString() + "/equipos/nuevo";
+        String urlRedirect = "/usuarios/" + usuarioId.toString() + "/equipos";
+
+        this.mockMvc.perform(post(urlPost)
+                        .param("nombre", "TestNuevoEquipo"))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(redirectedUrl(urlRedirect));
+
+        // y si después consultamos el listado de equipos con una petición
+        // GET el HTML contiene el equipo añadido.
+
+        this.mockMvc.perform(get(urlRedirect))
+                .andExpect((content().string(containsString("TestNuevoEquipo"))));
+    }
+
+
+
 }

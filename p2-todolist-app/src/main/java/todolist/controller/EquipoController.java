@@ -81,6 +81,32 @@ public class EquipoController {
         return "detalleEquipo";
     }
 
+    @GetMapping("/usuarios/{id}/equipos/nuevo")
+    public String formNuevoEquipo(@PathVariable(value="id") Long idUsuario,
+                                  @ModelAttribute EquipoData equipoData, Model model,
+                                  HttpSession session) {
+
+        comprobarUsuarioLogeado(idUsuario);
+
+        UsuarioData usuario = usuarioService.findById(idUsuario);
+        model.addAttribute("usuario", usuario);
+        return "formNuevoEquipo";
+    }
+
+    @PostMapping("/usuarios/{id}/equipos/nuevo")
+    public String nuevoEquipo(@PathVariable(value="id") Long idUsuario,
+                                  @ModelAttribute EquipoData equipoData, Model model,
+                                  RedirectAttributes flash, HttpSession session) {
+
+        comprobarUsuarioLogeado(idUsuario);
+
+        equipoService.registrar(equipoData);
+        equipoService.añadirUsuarioAEquipo(equipoData.getId(), idUsuario);
+
+        flash.addFlashAttribute("mensaje", "Tarea creada correctamente");
+        return "redirect:/usuarios/" + idUsuario + "/equipos";
+    }
+
 
 
 }
