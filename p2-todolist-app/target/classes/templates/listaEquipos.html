@@ -55,7 +55,9 @@
                                th:href="@{/equipos/{id}(id=${equipo.id})}">
                                 Detalles
                             </a>
-
+                            <form method="post" th:action="@{/usuarios/{id}/equipos/{id_equipo}/unirse(id=${usuario.id},id_equipo=${equipo.id})}">
+                                <button class="btn btn-primary" type="submit">Unirse</button>
+                            </form>
                         </td>
                     </tr>
                     </tbody>

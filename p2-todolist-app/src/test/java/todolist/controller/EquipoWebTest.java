@@ -60,7 +60,7 @@ public class EquipoWebTest {
         equipo = equipoService.registrar(equipo);
 
         Map<String, Long> ids = new HashMap<>();
-        ids.put("Richard Team", equipo.getId());
+        ids.put("equipoId", equipo.getId());
         ids.put("usuarioId", usuario.getId());
         return ids;
     }
@@ -99,6 +99,33 @@ public class EquipoWebTest {
                 .andExpect((content().string(containsString("TestNuevoEquipo"))));
     }
 
+    @Test
+    public void unirseAlEquipoTest() throws Exception {
+        UsuarioData usuario = new UsuarioData();
+        usuario.setNombre("no_Richard");
+        usuario.setEmail("no_richard@umh.es");
+        usuario.setPassword("1234");
+        usuario = usuarioService.registrar(usuario);
+        when(managerUserSession.usuarioLogeado()).thenReturn(usuario.getId());
 
 
+
+        Long equipoId = addUsuarioEquiposBD().get("equipoId");
+
+
+        String urlPost = "/usuarios/" + usuario.getId().toString() + "/equipos/" + equipoId + "/unirse";
+        String urlRedirect = "/equipos/" + equipoId;
+
+        this.mockMvc.perform(post(urlPost)
+                        .param(String.valueOf(usuario.getId()), "id")
+                        .param(String.valueOf(equipoId), "id_equipo"))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(redirectedUrl(urlRedirect));
+
+        this.mockMvc.perform(get("/equipos/" + equipoId))
+                .andExpect(content().string(
+                        allOf(containsString("Miembros de este equipo"),
+                                containsString("no_Richard"),
+                                containsString("no_richard@umh.es"))));
+    }
 }

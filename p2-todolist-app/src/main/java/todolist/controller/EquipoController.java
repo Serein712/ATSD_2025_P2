@@ -107,6 +107,18 @@ public class EquipoController {
         return "redirect:/usuarios/" + idUsuario + "/equipos";
     }
 
+    @PostMapping("/usuarios/{id}/equipos/{id_equipo}/unirse")
+    public String unirseAlEquipo(@PathVariable(value="id") Long idUsuario,
+                                 @PathVariable(value="id_equipo") Long idEquipo,
+                                 Model model, RedirectAttributes flash,
+                                 HttpSession session) {
+
+        comprobarUsuarioLogeado(idUsuario);
+        equipoService.añadirUsuarioAEquipo(idEquipo, idUsuario);
+
+        flash.addFlashAttribute("mensaje", "Se ha unido al equipo ");
+        return "redirect:/equipos/" + idEquipo;
+    }
 
 
 }
