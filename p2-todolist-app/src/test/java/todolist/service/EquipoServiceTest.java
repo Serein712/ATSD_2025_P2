@@ -112,5 +112,35 @@ public class EquipoServiceTest {
                 .isInstanceOf(EquipoServiceException.class);
     }
 
+    @Test
+    public void quitarUsuarioDeEquipoTest() {
+        // GIVEN
+        // Un usuario y un equipo en la base de datos
+        UsuarioData usuario = new UsuarioData();
+        usuario.setEmail("user@umh");
+        usuario.setPassword("1234");
+        usuario = usuarioService.registrar(usuario);
+        EquipoData equipo = equipoService.crearEquipo("Proyecto 1");
+
+        // WHEN
+        // Añadimos el usuario al equipo
+        equipoService.añadirUsuarioAEquipo(equipo.getId(), usuario.getId());
+
+        // THEN
+        // El usuario pertenece al equipo
+        List<UsuarioData> usuarios = equipoService.usuariosEquipo(equipo.getId());
+        assertThat(usuarios).hasSize(1);
+        assertThat(usuarios.get(0).getEmail()).isEqualTo("user@umh");
+
+        // WHEN
+        // Quitamos el usuario del equipo
+        equipoService.quitarUsuarioDeEquipo(equipo.getId(), usuario.getId());
+
+        // THEN
+        // El usuario no pertenece mas al equipo
+        usuarios = equipoService.usuariosEquipo(equipo.getId());
+        assertThat(usuarios).hasSize(0);
+    }
+
 
 }

@@ -152,5 +152,28 @@ public class EquipoService {
         return equipos;
 
     }
+
+    @Transactional
+    public void quitarUsuarioDeEquipo(Long idEquipo, Long idUsuario) {
+        // recuperamos el equipo
+        Equipo equipo = equipoRepository.findById(idEquipo).orElse(null);
+        if (equipo == null) throw new EquipoServiceException("El equipo no existe");
+
+        // recuperamos el usuario
+        Usuario usuario = usuarioRepository.findById(idUsuario).orElse(null);
+        if (usuario == null) throw new EquipoServiceException("El usuario no existe");
+
+        // comprobamos que el usuario no pertenece al equipo
+        if (!equipo.getUsuarios().contains(usuario))
+            throw new EquipoServiceException("El usuario no pertenece al equipo");
+
+        // añadimos el usuario al equipo
+        equipo.removeUsuario(usuario);
+        // guardamos el equipo
+        equipoRepository.save(equipo);
+        // guardamos el usuario
+        usuarioRepository.save(usuario);
+        // con ello se guarda la relación
+    }
 }
 

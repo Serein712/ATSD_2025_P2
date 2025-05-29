@@ -59,23 +59,16 @@ public class EquipoWebTest {
         equipo.setId(1L);
         equipo = equipoService.registrar(equipo);
 
-        // Devolvemos los ids del usuario y de la primera tarea añadida
         Map<String, Long> ids = new HashMap<>();
         ids.put("Richard Team", equipo.getId());
         ids.put("usuarioId", usuario.getId());
-        return ids; 
+        return ids;
     }
 
     @Test
     public void listaEquipos() throws Exception {
-        // GIVEN
-        // Un usuario con dos tareas en la BD
         Long usuarioId = addUsuarioEquiposBD().get("usuarioId");
         when(managerUserSession.usuarioLogeado()).thenReturn(usuarioId);
-
-        // WHEN, THEN
-        // se realiza la petición GET al listado de tareas del usuario,
-        // el HTML devuelto contiene las descripciones de sus tareas.
 
         String url = "/usuarios/" + usuarioId.toString() + "/equipos";
 
@@ -85,7 +78,5 @@ public class EquipoWebTest {
                         containsString("Richard Team")
                 ))));
     }
-
-
 
 }

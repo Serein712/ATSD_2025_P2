@@ -68,7 +68,7 @@ public class TareaController {
         tareaService.nuevaTareaUsuario(idUsuario, tareaData.getTitulo());
         flash.addFlashAttribute("mensaje", "Tarea creada correctamente");
         return "redirect:/usuarios/" + idUsuario + "/tareas";
-     }
+    }
 
     @GetMapping("/usuarios/{id}/tareas")
     public String listadoTareas(@PathVariable(value="id") Long idUsuario, Model model, HttpSession session) {
