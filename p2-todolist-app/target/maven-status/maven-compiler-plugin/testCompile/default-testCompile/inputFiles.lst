@@ -1,5 +1,6 @@
 D:\GitHub\ATSD_2025_P2\p2-todolist-app\src\test\java\todolist\repository\UsuarioTest.java
 D:\GitHub\ATSD_2025_P2\p2-todolist-app\src\test\java\todolist\controller\RegisteredPageTest.java
+D:\GitHub\ATSD_2025_P2\p2-todolist-app\src\test\java\todolist\service\EquipoServiceTest.java
 D:\GitHub\ATSD_2025_P2\p2-todolist-app\src\test\java\todolist\service\TareaServiceTest.java
 D:\GitHub\ATSD_2025_P2\p2-todolist-app\src\test\java\todolist\controller\UsuarioWebTest.java
 D:\GitHub\ATSD_2025_P2\p2-todolist-app\src\test\java\todolist\repository\EquipoTest.java
@@ -7,3 +8,4 @@ D:\GitHub\ATSD_2025_P2\p2-todolist-app\src\test\java\todolist\controller\TareaWe
 D:\GitHub\ATSD_2025_P2\p2-todolist-app\src\test\java\todolist\service\UsuarioServiceTest.java
 D:\GitHub\ATSD_2025_P2\p2-todolist-app\src\test\java\todolist\repository\TareaTest.java
 D:\GitHub\ATSD_2025_P2\p2-todolist-app\src\test\java\todolist\controller\AboutPageTest.java
+D:\GitHub\ATSD_2025_P2\p2-todolist-app\src\test\java\todolist\controller\EquipoWebTest.java

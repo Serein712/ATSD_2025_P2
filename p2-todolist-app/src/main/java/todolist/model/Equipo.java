@@ -83,4 +83,9 @@ public class Equipo implements Serializable {
     public int hashCode() {
         return Objects.hash(nombre);
     }
+
+    public void removeUsuario(Usuario usuario) {
+        this.getUsuarios().remove(usuario);
+        usuario.getEquipos().remove(this);
+    }
 }

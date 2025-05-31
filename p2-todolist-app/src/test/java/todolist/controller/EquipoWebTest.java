@@ -43,7 +43,7 @@ public class EquipoWebTest {
     @MockBean
     private ManagerUserSession managerUserSession;
 
-    // Método para inicializar los datos de prueba en la BD
+    // Metodo para inicializar los datos de prueba en la BD
     // Devuelve un mapa con los identificadores
 
     Map<String, Long> addUsuarioEquiposBD() {
@@ -59,23 +59,16 @@ public class EquipoWebTest {
         equipo.setId(1L);
         equipo = equipoService.registrar(equipo);
 
-        // Devolvemos los ids del usuario y de la primera tarea añadida
         Map<String, Long> ids = new HashMap<>();
-        ids.put("Richard Team", equipo.getId());
+        ids.put("equipoId", equipo.getId());
         ids.put("usuarioId", usuario.getId());
-        return ids; 
+        return ids;
     }
 
     @Test
     public void listaEquipos() throws Exception {
-        // GIVEN
-        // Un usuario con dos tareas en la BD
         Long usuarioId = addUsuarioEquiposBD().get("usuarioId");
         when(managerUserSession.usuarioLogeado()).thenReturn(usuarioId);
-
-        // WHEN, THEN
-        // se realiza la petición GET al listado de tareas del usuario,
-        // el HTML devuelto contiene las descripciones de sus tareas.
 
         String url = "/usuarios/" + usuarioId.toString() + "/equipos";
 
@@ -86,6 +79,100 @@ public class EquipoWebTest {
                 ))));
     }
 
+    @Test
+    public void formNuevoEquipoTest() throws Exception {
+        Long usuarioId = addUsuarioEquiposBD().get("usuarioId");
+        when(managerUserSession.usuarioLogeado()).thenReturn(usuarioId);
+
+        String urlPost = "/usuarios/" + usuarioId.toString() + "/equipos/nuevo";
+        String urlRedirect = "/usuarios/" + usuarioId.toString() + "/equipos";
+
+        this.mockMvc.perform(post(urlPost)
+                        .param("nombre", "TestNuevoEquipo"))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(redirectedUrl(urlRedirect));
+
+        // y si después consultamos el listado de equipos con una petición
+        // GET el HTML contiene el equipo añadido.
+
+        this.mockMvc.perform(get(urlRedirect))
+                .andExpect((content().string(containsString("TestNuevoEquipo"))));
+    }
+
+    @Test
+    public void unirseAlEquipoTest() throws Exception {
+        UsuarioData usuario = new UsuarioData();
+        usuario.setNombre("no_Richard");
+        usuario.setEmail("no_richard@umh.es");
+        usuario.setPassword("1234");
+        usuario = usuarioService.registrar(usuario);
+        when(managerUserSession.usuarioLogeado()).thenReturn(usuario.getId());
 
 
+
+        Long equipoId = addUsuarioEquiposBD().get("equipoId");
+
+
+        String urlPost = "/usuarios/" + usuario.getId().toString() + "/equipos/" + equipoId + "/unirse";
+        String urlRedirect = "/equipos/" + equipoId;
+
+        this.mockMvc.perform(post(urlPost)
+                        .param(String.valueOf(usuario.getId()), "id")
+                        .param(String.valueOf(equipoId), "id_equipo"))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(redirectedUrl(urlRedirect));
+
+        this.mockMvc.perform(get("/equipos/" + equipoId))
+                .andExpect(content().string(
+                        allOf(containsString("Miembros de este equipo"),
+                                containsString("no_Richard"),
+                                containsString("no_richard@umh.es"))));
+    }
+
+    @Test
+    public void abandonarEquipoTest() throws Exception {
+        //Crear nuevo equipo
+        EquipoData equipo = new EquipoData();
+        equipo.setNombre("TestAbandonarEquipo");
+        equipo.setId(2L);
+        equipo = equipoService.registrar(equipo);
+
+        //Añadir Richard al equipo
+        equipoService.añadirUsuarioAEquipo(equipo.getId(),addUsuarioEquiposBD().get("usuarioId"));
+
+        //Crear nuevo usuario no_Richard
+        UsuarioData usuario = new UsuarioData();
+        usuario.setNombre("no_Richard");
+        usuario.setEmail("no_richard@umh.es");
+        usuario.setPassword("1234");
+        usuario = usuarioService.registrar(usuario);
+        when(managerUserSession.usuarioLogeado()).thenReturn(usuario.getId());
+
+        //Añadir no_Richard al equipo
+        equipoService.añadirUsuarioAEquipo(equipo.getId(),usuario.getId());
+
+        //Comprobar que ambos estan en el equipo
+        this.mockMvc.perform(get("/equipos/" + equipo.getId()))
+                .andExpect(content().string(
+                        allOf(containsString("Miembros de este equipo"),
+                                containsString("Richard"),
+                                containsString("no_Richard"))));
+
+        //Abandonar el grupo (cuenta de no_Richard)
+        String urlPost = "/usuarios/" + usuario.getId().toString() + "/equipos/" + equipo.getId() + "/abandonar";
+        String urlRedirect = "/equipos/" + equipo.getId();
+
+        this.mockMvc.perform(post(urlPost)
+                        .param(String.valueOf(usuario.getId()), "id")
+                        .param(String.valueOf(equipo.getId()), "id_equipo"))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(redirectedUrl(urlRedirect));
+
+        // Comprobar que Richard esta en el equipo y no_Richard no
+        this.mockMvc.perform(get("/equipos/" + equipo.getId()))
+                .andExpect(content().string(
+                        allOf(containsString("Miembros de este equipo"),
+                                not(containsString("no_Richard")),
+                                containsString("Richard"))));
+    }
 }
