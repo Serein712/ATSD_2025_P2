@@ -43,7 +43,7 @@ public class EquipoWebTest {
     @MockBean
     private ManagerUserSession managerUserSession;
 
-    // Método para inicializar los datos de prueba en la BD
+    // Metodo para inicializar los datos de prueba en la BD
     // Devuelve un mapa con los identificadores
 
     Map<String, Long> addUsuarioEquiposBD() {
