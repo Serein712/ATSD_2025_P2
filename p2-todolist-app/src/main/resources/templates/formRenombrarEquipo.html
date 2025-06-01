@@ -7,15 +7,15 @@
 <div th:replace="fragments :: navbar"></div>
 <div class="container-fluid">
 
-    <h2 th:text="'Nuevo equipo para el usuario ' + ${usuario.getNombre()}"></h2>
+    <h2 th:text="'Renombrar equipo '"></h2>
 
-    <form method="post" th:action="@{/usuarios/{id}/equipos/nuevo(id=${usuario.id})}" th:object="${equipoData}">
+    <form method="post" th:action="@{/usuarios/{id}/equipos/{id_equipo}/renombrar(id=${usuario.id},id_equipo=${equipo.id})}" th:object="${string}">
         <div class="col-6">
         <div class="form-group">
             <label for="nombre">Nombre del equipo:</label>
-            <input class="form-control" id="nombre" name="nombre" required th:field="*{nombre}" type="text"/>
+            <input class="form-control" id="nombre" name="nombre" th:value="${equipo.getNombre()}"  type="text"/>
         </div>
-        <button class="btn btn-primary" type="submit">Crear equipo</button>
+        <button class="btn btn-primary" type="submit">Renombrar equipo</button>
         <a class="btn btn-link" th:href="@{/usuarios/{id}/equipos(id=${usuario.id})}">Cancelar</a>
         </div>
     </form>

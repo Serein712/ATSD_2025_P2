@@ -6,7 +6,16 @@
 <body>
 <div th:replace="fragments :: navbar"></div>
 <div class="container-fluid">
-
+    <div class="row mt-2">
+        <div class="col">
+            <div class="alert alert-success alert-dismissible fade show" role="alert" th:if="${!#strings.isEmpty(mensaje)}">
+                <span th:text="${mensaje}"></span>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        </div>
+    </div>
     <div class="row mt-3">
         <div class="col">
             <h2 th:text="'Listado de equipos de ' + ${usuario.nombre}"></h2>
@@ -32,8 +41,14 @@
                            th:href="@{/equipos/{id}(id=${equipo_usuario.id})}">
                             Detalles
                         </a>
+                        <form method="get" th:action="@{/usuarios/{id}/equipos/{id_equipo}/renombrar(id=${usuario.id},id_equipo=${equipo_usuario.id})}">
+                            <button class="btn btn-primary btn-sm me-2" type="submit">Renombrar</button>
+                        </form>
                         <form method="post" th:action="@{/usuarios/{id}/equipos/{id_equipo}/abandonar(id=${usuario.id},id_equipo=${equipo_usuario.id})}">
                             <button class="btn btn-danger btn-sm me-2" type="submit">Abandonar</button>
+                        </form>
+                        <form method="post" th:action="@{/usuarios/{id}/equipos/{id_equipo}/disolver(id=${usuario.id},id_equipo=${equipo_usuario.id})}">
+                            <button class="btn btn-danger btn-sm me-2" type="submit">Disolver</button>
                         </form>
                     </td>
                 </tr>
@@ -58,8 +73,14 @@
                                th:href="@{/equipos/{id}(id=${equipo.id})}">
                                 Detalles
                             </a>
+                            <form method="get" th:action="@{/usuarios/{id}/equipos/{id_equipo}/renombrar(id=${usuario.id},id_equipo=${equipo.id})}">
+                                <button class="btn btn-primary btn-sm me-2" type="submit">Renombrar</button>
+                            </form>
                             <form method="post" th:action="@{/usuarios/{id}/equipos/{id_equipo}/unirse(id=${usuario.id},id_equipo=${equipo.id})}">
                                 <button class="btn btn-primary btn-sm me-2" type="submit">Unirse</button>
+                            </form>
+                            <form method="post" th:action="@{/usuarios/{id}/equipos/{id_equipo}/disolver(id=${usuario.id},id_equipo=${equipo.id})}">
+                                <button class="btn btn-danger btn-sm me-2" type="submit">Disolver</button>
                             </form>
                         </td>
                     </tr>

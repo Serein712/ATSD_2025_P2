@@ -163,7 +163,8 @@ public class EquipoServiceTest {
 
         //THEN
         // el nombre del equipo ha cambiado
-        assertThat(equipo.getNombre()).isEqualTo("Nombre B");
+        EquipoData equipoActualizado = equipoService.recuperarEquipo(equipo.getId());
+        assertThat(equipoActualizado.getNombre()).isEqualTo("Nombre B");
     }
 
     @Test
