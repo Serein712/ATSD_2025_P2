@@ -8,4 +8,5 @@ import java.util.Optional;
 public interface EquipoRepository extends CrudRepository<Equipo, Long>{
     Optional<Equipo> findByNombre(String s);
     public List<Equipo> findAll();
+
 }

@@ -142,5 +142,85 @@ public class EquipoServiceTest {
         assertThat(usuarios).hasSize(0);
     }
 
+    @Test
+    public void renombrarEquipoTest(){
 
+        // GIVEN
+        // Un equipo en la base de datos..
+        EquipoData equipo = equipoService.crearEquipo("Nombre A");
+        assertThat(equipo.getNombre()).isEqualTo("Nombre A");
+
+        // .. y un usuario admin
+        UsuarioData usuario = new UsuarioData();
+        usuario.setEmail("user@umh");
+        usuario.setPassword("1234");
+        usuario.setAdmin(true);
+        usuario = usuarioService.registrar(usuario);
+
+        // WHEN
+        // se renombra el equipo
+        equipoService.renombrarEquipo(equipo,usuario, "Nombre B");
+
+        //THEN
+        // el nombre del equipo ha cambiado
+        assertThat(equipo.getNombre()).isEqualTo("Nombre B");
+    }
+
+    @Test
+    public void renombrarEquipoExcepcionTest(){
+
+        // GIVEN
+        // Un equipo en la base de datos..
+        EquipoData equipo = equipoService.crearEquipo("Nombre A");
+        assertThat(equipo.getNombre()).isEqualTo("Nombre A");
+
+        // .. y un usuario no admin
+        UsuarioData usuario2 = new UsuarioData();
+        usuario2.setEmail("user@umh");
+        usuario2.setPassword("1234");
+        usuario2.setAdmin(false);
+        usuario2 = usuarioService.registrar(usuario2);
+
+        UsuarioData finalUsuario = usuario2;
+        assertThatThrownBy(() ->
+                equipoService.renombrarEquipo(equipo, finalUsuario, "Nombre B")
+        ).isInstanceOf(EquipoServiceException.class)
+                .hasMessage("El usuario no es administrador");
+    }
+
+    @Test
+    public void disolverEquipoTest(){
+
+        // GIVEN
+        // Un equipo en la base de datos..
+        EquipoData equipo = equipoService.crearEquipo("Nombre A");
+
+        // un usuario miembro del equipo
+        UsuarioData usuario = new UsuarioData();
+        usuario.setEmail("user@umh");
+        usuario.setPassword("1234");
+        usuario = usuarioService.registrar(usuario);
+        equipoService.añadirUsuarioAEquipo(equipo.getId(), usuario.getId());
+
+        // .. y un usuario admin
+        UsuarioData admin = new UsuarioData();
+        admin.setEmail("admin@umh");
+        admin.setPassword("1234");
+        admin.setAdmin(true);
+        admin = usuarioService.registrar(admin);
+
+        // WHEN
+        // se elimina el equpo por el admin
+        equipoService.disolverEquipo(equipo,admin);
+
+        //THEN
+        // el equipo no existe
+        assertThatThrownBy(() ->
+                equipoService.recuperarEquipo(equipo.getId())
+        ).isInstanceOf(EquipoServiceException.class).hasMessage("El equipo no existe");
+
+        // y asegurar que usuario no tiene equipo asignado
+        assertThat(equipoService.equiposUsuario(usuario.getId())).isEmpty();
+
+    }
 }

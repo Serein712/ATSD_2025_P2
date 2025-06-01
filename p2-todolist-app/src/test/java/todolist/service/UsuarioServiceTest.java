@@ -16,7 +16,7 @@ public class UsuarioServiceTest {
     @Autowired
     private UsuarioService usuarioService;
 
-    // Método para inicializar los datos de prueba en la BD
+    // Metodo para inicializar los datos de prueba en la BD
     // Devuelve el identificador del usuario de la BD
     Long addUsuarioBD() {
         UsuarioData usuario = new UsuarioData();
