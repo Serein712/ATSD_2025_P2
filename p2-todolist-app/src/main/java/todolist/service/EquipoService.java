@@ -186,8 +186,13 @@ public class EquipoService {
         if (equipoRepository.findByNombre(nombreB).isPresent())
             throw new EquipoServiceException("Este nombre ya está ocupado");
 
+        // buscamos el equipo en BD
+        Equipo equipoBD = equipoRepository.findById(equipo.getId())
+                .orElseThrow(() -> new EquipoServiceException("El equipo no existe"));
+
         // cambiamos el nombre del equipo
-        equipo.setNombre(nombreB);
+        equipoBD.setNombre(nombreB);
+        equipoRepository.save(equipoBD);
     }
 
     public void disolverEquipo(EquipoData equipo, UsuarioData admin) {

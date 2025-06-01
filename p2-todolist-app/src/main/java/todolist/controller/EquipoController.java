@@ -13,6 +13,7 @@ import todolist.dto.EquipoData;
 import todolist.dto.TareaData;
 import todolist.dto.UsuarioData;
 import todolist.service.EquipoService;
+import todolist.service.EquipoServiceException;
 import todolist.service.TareaService;
 import todolist.service.UsuarioService;
 
@@ -116,6 +117,7 @@ public class EquipoController {
         comprobarUsuarioLogeado(idUsuario);
         equipoService.añadirUsuarioAEquipo(idEquipo, idUsuario);
 
+
         flash.addFlashAttribute("mensaje", "Se ha unido al equipo ");
         return "redirect:/equipos/" + idEquipo;
     }
@@ -130,6 +132,50 @@ public class EquipoController {
         equipoService.quitarUsuarioDeEquipo(idEquipo, idUsuario);
 
         flash.addFlashAttribute("mensaje", "Ha abandonado este equipo ");
+        return "redirect:/equipos/" + idEquipo;
+    }
+
+    @GetMapping("/usuarios/{id}/equipos/{id_equipo}/renombrar")
+    public String formRenombrarEquipo(@PathVariable(value="id") Long idUsuario,
+                                      @PathVariable(value="id_equipo") Long idEquipo,
+                                  @ModelAttribute EquipoData equipoData, Model model,
+                                  HttpSession session) {
+
+        comprobarUsuarioLogeado(idUsuario);
+
+        UsuarioData usuario = usuarioService.findById(idUsuario);
+        EquipoData equipo = equipoService.findById(idEquipo);
+        model.addAttribute("usuario", usuario);
+        model.addAttribute("equipo", equipo);
+        return "formRenombrarEquipo";
+    }
+
+    @PostMapping("/usuarios/{id}/equipos/{id_equipo}/renombrar")
+    public String renombrarEquipo(@PathVariable(value="id") Long idUsuario,
+                                        @PathVariable(value="id_equipo") Long idEquipo,
+                                        @RequestParam("nombre") String nombre, Model model,
+                                        RedirectAttributes flash,
+                                        HttpSession session) {
+
+        comprobarUsuarioLogeado(idUsuario);
+
+        UsuarioData usuario = usuarioService.findById(idUsuario);
+        EquipoData equipo = equipoService.findById(idEquipo);
+
+        if (nombre == null || nombre.trim().isEmpty()) {
+            flash.addFlashAttribute("mensaje", "El nombre no puede estar vacío");
+            return "redirect:/equipos/" + idEquipo;
+        }
+
+        try {
+            equipoService.renombrarEquipo(equipo,usuario,nombre);
+            model.addAttribute("usuario", usuario);
+            flash.addFlashAttribute("mensaje", "El equipo ha sido renombrado");
+
+        } catch (EquipoServiceException e) {
+            flash.addFlashAttribute("mensaje", e.getMessage());
+
+        }
         return "redirect:/equipos/" + idEquipo;
     }
 

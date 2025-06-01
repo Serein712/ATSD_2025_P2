@@ -32,6 +32,9 @@
                            th:href="@{/equipos/{id}(id=${equipo_usuario.id})}">
                             Detalles
                         </a>
+                        <form method="get" th:action="@{/usuarios/{id}/equipos/{id_equipo}/renombrar(id=${usuario.id},id_equipo=${equipo_usuario.id})}">
+                            <button class="btn btn-primary btn-sm me-2" type="submit">Renombrar</button>
+                        </form>
                         <form method="post" th:action="@{/usuarios/{id}/equipos/{id_equipo}/abandonar(id=${usuario.id},id_equipo=${equipo_usuario.id})}">
                             <button class="btn btn-danger btn-sm me-2" type="submit">Abandonar</button>
                         </form>
@@ -58,6 +61,9 @@
                                th:href="@{/equipos/{id}(id=${equipo.id})}">
                                 Detalles
                             </a>
+                            <form method="get" th:action="@{/usuarios/{id}/equipos/{id_equipo}/renombrar(id=${usuario.id},id_equipo=${equipo.id})}">
+                                <button class="btn btn-primary btn-sm me-2" type="submit">Renombrar</button>
+                            </form>
                             <form method="post" th:action="@{/usuarios/{id}/equipos/{id_equipo}/unirse(id=${usuario.id},id_equipo=${equipo.id})}">
                                 <button class="btn btn-primary btn-sm me-2" type="submit">Unirse</button>
                             </form>
