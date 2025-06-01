@@ -179,6 +179,28 @@ public class EquipoController {
         return "redirect:/equipos/" + idEquipo;
     }
 
+    @PostMapping("/usuarios/{id}/equipos/{id_equipo}/disolver")
+    public String disolverEquipo(@PathVariable(value="id") Long idUsuario,
+                                  @PathVariable(value="id_equipo") Long idEquipo,
+                                  Model model,
+                                  RedirectAttributes flash,
+                                  HttpSession session) {
 
+        comprobarUsuarioLogeado(idUsuario);
+
+        UsuarioData usuario = usuarioService.findById(idUsuario);
+        EquipoData equipo = equipoService.findById(idEquipo);
+
+        try {
+            equipoService.disolverEquipo(equipo,usuario);
+            model.addAttribute("usuario", usuario);
+            flash.addFlashAttribute("mensaje", "El equipo ha sido disuelto");
+
+        } catch (EquipoServiceException e) {
+            flash.addFlashAttribute("mensaje", e.getMessage());
+
+        }
+        return "redirect:/usuarios/" + idUsuario +"/equipos";
+    }
 }
 
