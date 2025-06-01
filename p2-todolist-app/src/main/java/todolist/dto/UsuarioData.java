@@ -90,6 +90,7 @@ public class UsuarioData {
     public Boolean getAdmin() {
         return admin;
     }
+
     public void setAdmin(Boolean admin) {
         this.admin = admin;
     }
