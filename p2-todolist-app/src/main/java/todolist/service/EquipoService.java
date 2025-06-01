@@ -189,5 +189,13 @@ public class EquipoService {
         // cambiamos el nombre del equipo
         equipo.setNombre(nombreB);
     }
+
+    public void disolverEquipo(EquipoData equipo, UsuarioData admin) {
+        // solo admin puede renombrar un equipo
+        if (admin.getAdmin() == false)
+            throw new EquipoServiceException("El usuario no es administrador");
+
+        equipoRepository.deleteById(equipo.getId());
+    }
 }
 

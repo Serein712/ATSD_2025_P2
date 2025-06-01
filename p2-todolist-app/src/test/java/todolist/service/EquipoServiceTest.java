@@ -187,4 +187,40 @@ public class EquipoServiceTest {
         ).isInstanceOf(EquipoServiceException.class)
                 .hasMessage("El usuario no es administrador");
     }
+
+    @Test
+    public void disolverEquipoTest(){
+
+        // GIVEN
+        // Un equipo en la base de datos..
+        EquipoData equipo = equipoService.crearEquipo("Nombre A");
+
+        // un usuario miembro del equipo
+        UsuarioData usuario = new UsuarioData();
+        usuario.setEmail("user@umh");
+        usuario.setPassword("1234");
+        usuario = usuarioService.registrar(usuario);
+        equipoService.añadirUsuarioAEquipo(equipo.getId(), usuario.getId());
+
+        // .. y un usuario admin
+        UsuarioData admin = new UsuarioData();
+        admin.setEmail("admin@umh");
+        admin.setPassword("1234");
+        admin.setAdmin(true);
+        admin = usuarioService.registrar(admin);
+
+        // WHEN
+        // se elimina el equpo por el admin
+        equipoService.disolverEquipo(equipo,admin);
+
+        //THEN
+        // el equipo no existe
+        assertThatThrownBy(() ->
+                equipoService.recuperarEquipo(equipo.getId())
+        ).isInstanceOf(EquipoServiceException.class).hasMessage("El equipo no existe");
+
+        // y asegurar que usuario no tiene equipo asignado
+        assertThat(equipoService.equiposUsuario(usuario.getId())).isEmpty();
+
+    }
 }
