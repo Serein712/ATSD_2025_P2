@@ -142,5 +142,27 @@ public class EquipoServiceTest {
         assertThat(usuarios).hasSize(0);
     }
 
+    @Test
+    public void renombrarEquipoTest(){
 
+        // GIVEN
+        // Un equipo en la base de datos..
+        EquipoData equipo = equipoService.crearEquipo("Nombre A");
+        assertThat(equipo.getNombre()).isEqualTo("Nombre A");
+
+        // .. y y un usuario no admin
+        UsuarioData usuario = new UsuarioData();
+        usuario.setEmail("user@umh");
+        usuario.setPassword("1234");
+        usuario.setAdmin(true);
+        usuario = usuarioService.registrar(usuario);
+
+        // WHEN
+        // se renombra el equipo
+        equipoService.renombrarEquipo(equipo,usuario, "Nombre B");
+
+        //THEN
+        // el nombre del equipo ha cambiado
+        assertThat(equipo.getNombre()).isEqualTo("Nombre B");
+    }
 }

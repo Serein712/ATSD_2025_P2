@@ -175,5 +175,19 @@ public class EquipoService {
         usuarioRepository.save(usuario);
         // con ello se guarda la relación
     }
+
+    public void renombrarEquipo(EquipoData equipo, UsuarioData usuario, String nombreB) {
+
+        // solo admin puede renombrar un equipo
+        if (usuario.getAdmin() == false)
+            throw new EquipoServiceException("El usuario no es administrador");
+
+        // comprobamos que el nombre nuevo esta libre
+        if (equipoRepository.findByNombre(nombreB).isPresent())
+            throw new EquipoServiceException("Este nombre ya está ocupado");
+
+        // cambiamos el nombre del equipo
+        equipo.setNombre(nombreB);
+    }
 }
 

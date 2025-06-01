@@ -46,6 +46,14 @@ public class Usuario implements Serializable {
 
     // Getters y setters atributos básicos
 
+    public Boolean getAdmin() {
+        return admin;
+    }
+
+    public void setAdmin(Boolean admin) {
+        this.admin = admin;
+    }
+
     public Long getId() {
         return id;
     }
