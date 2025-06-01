@@ -100,10 +100,10 @@ public class EquipoController {
 
         comprobarUsuarioLogeado(idUsuario);
 
-        equipoService.registrar(equipoData);
-        equipoService.añadirUsuarioAEquipo(equipoData.getId(), idUsuario);
+        EquipoData equipoRegistrado = equipoService.registrar(equipoData);
+        equipoService.añadirUsuarioAEquipo(equipoRegistrado.getId(), idUsuario);
 
-        flash.addFlashAttribute("mensaje", "Tarea creada correctamente");
+        flash.addFlashAttribute("mensaje", "Equipo creado correctamente");
         return "redirect:/usuarios/" + idUsuario + "/equipos";
     }
 
