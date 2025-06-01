@@ -150,7 +150,7 @@ public class EquipoServiceTest {
         EquipoData equipo = equipoService.crearEquipo("Nombre A");
         assertThat(equipo.getNombre()).isEqualTo("Nombre A");
 
-        // .. y y un usuario no admin
+        // .. y un usuario admin
         UsuarioData usuario = new UsuarioData();
         usuario.setEmail("user@umh");
         usuario.setPassword("1234");
@@ -164,5 +164,27 @@ public class EquipoServiceTest {
         //THEN
         // el nombre del equipo ha cambiado
         assertThat(equipo.getNombre()).isEqualTo("Nombre B");
+    }
+
+    @Test
+    public void renombrarEquipoExcepcionTest(){
+
+        // GIVEN
+        // Un equipo en la base de datos..
+        EquipoData equipo = equipoService.crearEquipo("Nombre A");
+        assertThat(equipo.getNombre()).isEqualTo("Nombre A");
+
+        // .. y un usuario no admin
+        UsuarioData usuario2 = new UsuarioData();
+        usuario2.setEmail("user@umh");
+        usuario2.setPassword("1234");
+        usuario2.setAdmin(false);
+        usuario2 = usuarioService.registrar(usuario2);
+
+        UsuarioData finalUsuario = usuario2;
+        assertThatThrownBy(() ->
+                equipoService.renombrarEquipo(equipo, finalUsuario, "Nombre B")
+        ).isInstanceOf(EquipoServiceException.class)
+                .hasMessage("El usuario no es administrador");
     }
 }
