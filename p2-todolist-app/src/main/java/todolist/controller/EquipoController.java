@@ -156,25 +156,19 @@ public class EquipoController {
                                         @RequestParam("nombre") String nombre, Model model,
                                         RedirectAttributes flash,
                                         HttpSession session) {
-
         comprobarUsuarioLogeado(idUsuario);
-
         UsuarioData usuario = usuarioService.findById(idUsuario);
         EquipoData equipo = equipoService.findById(idEquipo);
 
         if (nombre == null || nombre.trim().isEmpty()) {
             flash.addFlashAttribute("mensaje", "El nombre no puede estar vacío");
-            return "redirect:/equipos/" + idEquipo;
-        }
-
+            return "redirect:/equipos/" + idEquipo;}
         try {
             equipoService.renombrarEquipo(equipo,usuario,nombre);
             model.addAttribute("usuario", usuario);
             flash.addFlashAttribute("mensaje", "El equipo ha sido renombrado");
-
         } catch (EquipoServiceException e) {
             flash.addFlashAttribute("mensaje", e.getMessage());
-
         }
         return "redirect:/equipos/" + idEquipo;
     }
@@ -187,10 +181,8 @@ public class EquipoController {
                                   HttpSession session) {
 
         comprobarUsuarioLogeado(idUsuario);
-
         UsuarioData usuario = usuarioService.findById(idUsuario);
         EquipoData equipo = equipoService.findById(idEquipo);
-
         try {
             equipoService.disolverEquipo(equipo,usuario);
             model.addAttribute("usuario", usuario);
@@ -198,7 +190,6 @@ public class EquipoController {
 
         } catch (EquipoServiceException e) {
             flash.addFlashAttribute("mensaje", e.getMessage());
-
         }
         return "redirect:/usuarios/" + idUsuario +"/equipos";
     }

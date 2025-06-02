@@ -199,7 +199,6 @@ public class EquipoService {
         // solo admin puede renombrar un equipo
         if (admin.getAdmin() == false)
             throw new EquipoServiceException("El usuario no es administrador");
-
         equipoRepository.deleteById(equipo.getId());
     }
 }

@@ -222,6 +222,5 @@ public class EquipoServiceTest {
 
         // y asegurar que usuario no tiene equipo asignado
         assertThat(equipoService.equiposUsuario(usuario.getId())).isEmpty();
-
     }
 }

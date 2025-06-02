@@ -108,10 +108,7 @@ public class EquipoWebTest {
         usuario = usuarioService.registrar(usuario);
         when(managerUserSession.usuarioLogeado()).thenReturn(usuario.getId());
 
-
-
         Long equipoId = addUsuarioEquiposBD().get("equipoId");
-
 
         String urlPost = "/usuarios/" + usuario.getId().toString() + "/equipos/" + equipoId + "/unirse";
         String urlRedirect = "/equipos/" + equipoId;
